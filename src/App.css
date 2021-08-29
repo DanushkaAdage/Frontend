@@ -1,0 +1,131 @@
+.flex{
+  display: flex;
+}
+.nav-div{
+  background-color: white;
+  padding: 20px;
+}
+.signin{
+  background-color: rgb(1, 86, 155);
+  color: white;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 50px;
+  padding-right: 50px;
+  font-weight: bolder;
+  font-size: 10pt;
+  border: 0;
+  border-radius: 50px;
+}
+.btn-submit{
+  background-color: rgb(1, 86, 155);
+  color: white;
+  padding-top: 8px;
+  padding-bottom: 8px;margin-top: 20px;
+  width: 100%;
+  font-weight: 500;
+  font-size: 13pt;
+  border: 0;
+  border-radius: 50px;
+}
+.btn-sub{
+  background-color: rgb(1, 86, 155);
+  color: white;
+  padding-top: 8px;
+  padding-bottom: 8px;margin-top: 20px;
+  width: 20%;
+  font-weight: 500;
+  font-size: 11pt;
+  border-width: 2px;
+  border-color: rgb(1, 86, 155);
+  border-style: solid;
+  border-radius: 50px;
+}
+.btn-save{
+  color: rgb(1, 86, 155);
+  background-color: white;
+  padding-top: 8px;
+  margin-right: 20px;
+  padding-bottom: 8px;margin-top: 20px;
+  width: 20%;
+  font-weight: 500;
+  font-size: 11pt;
+  border-width: 2px;
+  border-color: rgb(1, 86, 155);
+  border-style: solid;
+  border-radius: 50px;
+}
+.topbar .nav-link{
+  color: gray;
+  font-size: 13px;
+}
+
+.card-div{
+  padding: 80px;
+}
+.card{
+  padding: 30px;
+}
+
+#review-table{
+  border-color: rgb(0, 123, 224);
+  text-align: center;
+  border-top-left-radius: 10px;
+}
+#review-table th{
+  font-weight: 400;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+#review-table td{
+  font-weight: 400;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+#review-table thead{
+  color: white;
+  background-color: rgb(1, 86, 155);
+}
+#review-table tbody{
+  color: rgb(1, 86, 155);
+  font-size: 11pt;
+}
+
+.home-logo{
+  width: 200px;
+  padding-bottom: 25px;
+}
+.welcomemsg{
+  color: rgb(1, 86, 155);
+  padding: 10px;
+}
+.btn-signup{
+  color: rgb(1, 86, 155);
+  background-color: white;
+  padding-top: 8px;
+  margin-right: 20px;
+  padding-bottom: 8px;margin-top: 20px;
+  width: 100%;
+  font-weight: 500;
+  font-size: 11pt;
+  border-width: 2px;
+  border-color: rgb(1, 86, 155);
+  border-style: solid;
+  border-radius: 50px;
+}
+.btn-signin{
+  background-color: rgb(1, 86, 155);
+  color: white;
+  padding-top: 8px;
+  padding-bottom: 8px;margin-top: 20px;
+  width: 100%;
+  font-weight: 500;
+  font-size: 13pt;
+  border: 0;
+  border-radius: 50px;
+}
+
+.bottom-para{
+  color: rgb(100, 84, 84);
+  font-size: 12px;
+}
