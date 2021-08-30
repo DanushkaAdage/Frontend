@@ -4,11 +4,13 @@ import '../App.css';
 
 function Footer() {
   return (
-    <div className="footer">
-      <p>
-            &copy; Copyright 2021, Designed and Developed by <span id="fspan">SafeEnviro</span>
-      </p>
-    </div>
+    <footer className="footer mt-auto">
+      <div className="container">
+        <p>
+              &copy; Copyright 2021, Designed and Developed by <span id="fspan">SafeEnviro</span>
+        </p>
+      </div>
+    </footer>
   );
 }
 

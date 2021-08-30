@@ -14,8 +14,8 @@ function LoginConfirm() {
   return (
     <div className="bg-light">
       <Navibar />
-      <Container className="justify-content-center col-lg-5 col-md-7 col-sm-12 card-div">
-        <Card>
+      <Container className="justify-content-center card-div">
+        <Card className="home-card">
             <Card.Body>
                 <Card.Title align="center">
                     <img alt="Complete" src={img} width="60" className="pb-3" /> <br />

@@ -11,7 +11,7 @@ import PasswordConfirm from './pages/confirmation/PasswordConfirm';
 import SignupConfirm from './pages/confirmation/SignupConfirm';
 import LoginConfirm from './pages/confirmation/LoginConfirm';
 import Dash from './pages/Dash';
-import Footer from './pages/components/Footer';
+// import Footer from './pages/components/Footer';
 import AdminRoute from './pages/routes/AdminRoute';
 import CollectorRoute from './pages/routes/CollectorRoute';
 // import axios from 'axios';
@@ -25,8 +25,8 @@ function App() {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/dash" exact component={Dash} />
-            <CollectorRoute path="/collectionform" exact component={CollectionForm} isAuth={sessionStorage.getItem("isAuth")} acctype={sessionStorage.getItem("acctype")}  />
-            <AdminRoute path="/reviewform" component={ReviewForm} isAuth={sessionStorage.getItem("isAuth")} acctype={sessionStorage.getItem("acctype")} />
+            <CollectorRoute path="/collectionform" exact component={CollectionForm} />
+            <AdminRoute path="/reviewform" component={ReviewForm} />
             <Route path="/signup" exact component={Signup} />
             <Route path="/forgotpassword" exact component={ForgotPassword} />
             <Route path="/passwordconfirm" exact component={PasswordConfirm} />
@@ -36,7 +36,7 @@ function App() {
           </Switch>
         </Router>
 
-        <Footer />
+        {/* <Footer /> */}
       </div>
   );
 }

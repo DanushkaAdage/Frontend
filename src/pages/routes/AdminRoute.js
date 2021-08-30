@@ -1,7 +1,9 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-function AdminRoute({ isAuth, acctype , component:Component, ...rest}) {
+function AdminRoute({ component:Component, ...rest}) {
+    const acctype = (sessionStorage.getItem("acctype"));
+    const isAuth = (sessionStorage.getItem("isAuth"));
     return (
         <Route 
             {...rest}

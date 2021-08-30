@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Logo from './../logo.png';
 import Container from 'react-bootstrap/Container';
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 
 
 function AdminNavbar() {
+    const [islogout, setislogout] = useState(false);
+    const logout = () =>{
+        localStorage.clear();
+        sessionStorage.clear();
+        setislogout(true);
+    }
     return (
         <div>
             {/* <Container>
@@ -33,11 +39,12 @@ function AdminNavbar() {
 
                             <NavLink className="nav-link hover active" activeClassName="active" to="/reviewform">Review Table</NavLink>
 
-                            <button className="signin">SIGN OUT</button>
+                            <button className="signin" onClick={logout}>SIGN OUT</button>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+            {islogout && <Redirect to="/login" />}
         </div>
     );
 }

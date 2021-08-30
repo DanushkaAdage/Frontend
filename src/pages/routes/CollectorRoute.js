@@ -1,7 +1,9 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-function CollectorRoute({ isAuth, acctype , component:Component, ...rest}) {
+function CollectorRoute({ component:Component, ...rest}) {
+    const acctype = (sessionStorage.getItem("acctype"));
+    const isAuth = (sessionStorage.getItem("isAuth"));
     return (
         <Route 
             {...rest}

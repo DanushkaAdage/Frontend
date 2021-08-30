@@ -11,11 +11,13 @@ import Logo from './logo.png';
 import './App.css';
 
 function Home() {
+  
+
   return (
-    <div className="bg-light">
+    <div className="h-100">
       <Navibar />
-      <Container className="justify-content-center col-lg-5 col-md-7 col-sm-12 card-div">
-        <Card>
+      <Container className="justify-content-center card-div">
+        <Card className="home-card">
           <Card.Body>
             <Form className="wastecollectionform">
               <Row>

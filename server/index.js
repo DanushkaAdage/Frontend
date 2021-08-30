@@ -141,7 +141,7 @@ app.post('/collectionform', (req, res)=> {
     const date = req.body.date;
 
     db.query(
-        "INSERT INTO `collectionform` (`collectionid`, `collectionpoint`, `collectedby`, `wastetype`, `collectingequipment`, `quantity`, `dateandtime`) VALUES (?,?,?,?,?,?)",
+        "INSERT INTO `collectionform` (`collectionpoint`, `collectedby`, `wastetype`, `collectingequipment`, `quantity`, `dateandtime`) VALUES (?,?,?,?,?,?)",
         [collectionpoint, wastetype, quantity, collectedby, collectingequipment, date],
         (err, result)=>{
             if (err) {

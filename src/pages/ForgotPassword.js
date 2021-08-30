@@ -13,8 +13,8 @@ function ForgotPassword() {
   return (
     <div className="bg-light">
       <Navibar />
-      <Container className="justify-content-center col-lg-5 col-md-7 col-sm-12 card-div">
-        <Card>
+      <Container className="justify-content-center card-div">
+        <Card className="home-card">
           <Card.Body>
             <Card.Title><h2>Forgot Password</h2></Card.Title>
             <Card.Subtitle className="mb-2 text-muted">.</Card.Subtitle>
@@ -23,7 +23,7 @@ function ForgotPassword() {
                     <Col>
                         <Form.Group className="mb-3" controlId="formGridAddress1">
                             <Form.Label>User Email</Form.Label>
-                            <Form.Control required type="text" placeholder="Enter your Email" name="username" />
+                            <Form.Control required type="email" placeholder="Enter your Email" name="username" />
                         </Form.Group>
 
                         <button className="btn-signin" type="submit">Reset Password</button>

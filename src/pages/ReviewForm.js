@@ -13,12 +13,12 @@ function Reviewform() {
   return (
     <div className="bg-light">
       <AdminNavbar />
-      <Container className="justify-content-end col-lg-9 col-md-11 col-sm-12 card-div">
-        <Card>
+      <Container className="justify-content-center col-lg-9 col-md-10 col-sm-12 card-div">
+        <Card className="w-100">
           <Card.Body>
             <Card.Title><h2>Waste collection review form</h2></Card.Title>
             <Card.Subtitle className="mb-2 text-muted">.</Card.Subtitle>
-            <Form className="wastecollectionform">
+            <Form className="wastereviewform">
                 <Row>
                     <Col>
                         <Table id="review-table" bordered hover responsive size="sm">
@@ -30,7 +30,7 @@ function Reviewform() {
                                     <th>Waste type</th>
                                     <th>Equipment</th>
                                     <th>Quantity</th>
-                                    <th>Tipping point</th>
+                                    <th className="tipP">Tipping point</th>
                                     <th>Check</th>
                                 </tr>
                             </thead>
@@ -42,7 +42,9 @@ function Reviewform() {
                                     <td>Plastic</td>
                                     <td>Bin</td>
                                     <td>24 Kg</td>
-                                    <td>20 pt</td>
+                                    <td>
+                                        <Form.Control className="tipP" required type="text" placeholder="Tipping point" name="tippingPoint"  />
+                                    </td>
                                     <td>
                                     {['checkbox'].map((type) => (
                                         <div key={type}>
@@ -60,7 +62,9 @@ function Reviewform() {
                                     <td>Plastic</td>
                                     <td>Bin</td>
                                     <td>24 Kg</td>
-                                    <td>20 pt</td>
+                                    <td>
+                                        <Form.Control className="tipP" required type="text" placeholder="Tipping point" name="tippingPoint"  />
+                                    </td>
                                     <td>
                                     {['checkbox'].map((type) => (
                                         <div key={type}>
@@ -78,7 +82,9 @@ function Reviewform() {
                                     <td>Plastic</td>
                                     <td>Bin</td>
                                     <td>24 Kg</td>
-                                    <td>20 pt</td>
+                                    <td>
+                                        <Form.Control className="tipP" required type="text" placeholder="Tipping point" name="tippingPoint"  />
+                                    </td>
                                     <td>
                                     {['checkbox'].map((type) => (
                                         <div key={type}>

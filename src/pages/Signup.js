@@ -59,8 +59,8 @@ function Signup() {
   return (
     <div className="bg-light">
       <Navibar />
-      <Container className="justify-content-center col-lg-5 col-md-7 col-sm-12 card-div">
-        <Card>
+      <Container className="justify-content-center card-div">
+        <Card className="home-card">
           <Card.Body>
             <Card.Title><h2>Create an account</h2></Card.Title>
             <Card.Subtitle className="mb-2 text-muted">.</Card.Subtitle>
@@ -103,7 +103,7 @@ function Signup() {
                             <Form.Label>Account Type</Form.Label>
                             <Form.Select required aria-label="Default select example" name="accounttype"
                               onChange={e => {setaccounttype(e.target.value)}} >
-                                <option>Auth</option>
+                                <option value="" disabled selected>Account Type</option>
                                 <option value="Admin">Admin</option>
                                 <option value="Collector">Collector</option>
                             </Form.Select>

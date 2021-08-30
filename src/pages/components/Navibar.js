@@ -30,9 +30,9 @@ function Navibar() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse className=" justify-content-end"  id="basic-navbar-nav">
                         <Nav>
-                            <NavLink className="nav-link hover" activeClassName="active" to="/collectionform">Collection Form</NavLink>
+                            {/* <NavLink className="nav-link hover" activeClassName="active" to="/collectionform">Collection Form</NavLink>
 
-                            <NavLink className="nav-link hover" activeClassName="active" to="/reviewform">Review Table</NavLink>
+                            <NavLink className="nav-link hover" activeClassName="active" to="/reviewform">Review Table</NavLink> */}
 
                             <NavLink className="nav-link" activeClassName="active" to="/login">
                                 <button className="signin">SIGN IN</button>

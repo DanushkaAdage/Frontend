@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 import Container from 'react-bootstrap/Container';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
@@ -19,6 +21,41 @@ function CollectionForm() {
   const [collectingEquipment, setcollectingEquipment] = useState("");
   const [date, setdate] = useState("");
   const [collectionStatus, setcollectionStatus] = useState("");
+  const [showDanger, setshowDanger] = useState(false);
+  const [showSuccess, setshowSuccess] = useState(false);
+
+  
+
+  useEffect(() => {
+    const curTime = new Date().toLocaleString();
+    const formdata = window.localStorage.getItem('collection-data');
+    const savedValues = (JSON.parse(formdata));
+    if(savedValues){
+      setcollectionPoint(savedValues.collectionPoint);
+      setwasteType(savedValues.wasteType);
+      setquantity(savedValues.quantity);
+      setcollectedBy(savedValues.collectedBy);
+      setcollectingEquipment(savedValues.collectingEquipment);
+      setdate(savedValues.date);
+    }else{
+      setdate(curTime);
+    }
+    
+  }, []);
+
+  useEffect(() => {
+    const formValues = {collectionPoint, wasteType, quantity,collectedBy, collectingEquipment, date}
+    window.localStorage.setItem('collection-data', JSON.stringify(formValues));
+  });
+
+  const formReset = e =>{
+    setcollectionPoint("");
+    setwasteType("");
+    setquantity("");
+    setcollectedBy("");
+    setcollectingEquipment("");
+    setdate(new Date().toLocaleString());
+  }
 
   const collection = e => {
     e.preventDefault();
@@ -34,17 +71,26 @@ function CollectionForm() {
     axios.post('http://localhost:3001/collectionform', data).then(
       (response) => {
         console.log(response);
-        if(response.data.message){
-          console.log(response);
-          setcollectionStatus(response.data.message);
-        }else{
-          console.log(response);
-          // setcollectionStatus(response);
+        if(!response.err){
+          if(response.data.message.sqlMessage){
+            setcollectionStatus(response.data.message.sqlMessage);
+            setshowDanger(true);
+          } else {
+            localStorage.clear();
+            formReset();
+            setcollectionStatus(response.data.message);
+            setshowSuccess(true);
+          }
+        } else {
+          setcollectionStatus(response.data.err);
+          setshowDanger(false);
         }
       }
     ).catch(
       (err) => {
         console.log(err);
+        setcollectionStatus(err);
+        setshowDanger(false);
       }
     )
   }
@@ -53,62 +99,78 @@ function CollectionForm() {
   return (
     <div className="bg-light">
       <CollectorNavbar />
-      <Container className="justify-content-end col-lg-9 col-md-11 col-sm-12 card-div">
-        <Card>
+      <Container className="justify-content-center col-lg-9 col-md-10 col-sm-12 card-div">
+        <Card className="w-100">
           <Card.Body>
             <Card.Title><h2>Waste collection form</h2></Card.Title>
             <Card.Subtitle className="mb-2 text-muted">.</Card.Subtitle>
             <Form className="wastecollectionform" onSubmit={collection}>
               <Row>
-                <Col>
+                <Col lg={6} md={6} sm={12}> 
+
                   <Form.Group className="mb-3" controlId="collectionPoint">
                     <Form.Label>Collection point</Form.Label>
                     <Form.Control required type="text" placeholder="Collection point" name="collectionPoint"
-                      onChange={e => {setcollectionPoint(e.target.value)}} />
+                      onChange={e => setcollectionPoint(e.target.value)} value={collectionPoint}  />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="wasteType">
                     <Form.Label>Waste type</Form.Label>
                     <Form.Select required aria-label="Default select example" name="wasteType"
-                      onChange={e => {setwasteType(e.target.value)}} >
+                      onChange={e => {setwasteType(e.target.value)}} value={wasteType} >
+                      <option value="" disabled defaultValue>Waste Type</option>
                       <option value="1">One</option>
                       <option value="2">Two</option>
                       <option value="3">Three</option>
                     </Form.Select>
                   </Form.Group>
 
-                  <Form.Group className="mb-3" controlId="quantity">
-                    <Form.Label>Quantity</Form.Label>
-                    <Form.Control required type="text" placeholder="Quantity" name="quantity"
-                      onChange={e => {setquantity(e.target.value)}} />
-                  </Form.Group>
+                  <Form.Label>Quantity</Form.Label>
+                  <InputGroup className="mb-3" controlId="quantity">
+                    <Form.Control required type="text" placeholder="Quantity" name="quantity" aria-label="quantity" aria-describedby="quantity"
+                      onChange={e => {setquantity(e.target.value)}} value={quantity} />
+                    <InputGroup.Text id="quantity">Kg</InputGroup.Text>
+                  </InputGroup>
+
                 </Col>
-                <Col>
+                <Col  lg={6} md={6} sm={12}>
+
                   <Form.Group className="mb-3" controlId="collectedBy">
                     <Form.Label>Collected by</Form.Label>
                     <Form.Control required type="text" placeholder="Collected by" name="collectedBy"
-                      onChange={e => {setcollectedBy(e.target.value)}} />
+                      onChange={e => {setcollectedBy(e.target.value)}} value={collectedBy} />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="collectingEquipment">
                     <Form.Label>Collecting equipment</Form.Label>
                     <Form.Control required type="text" placeholder="Collected equipment" name="collectingEquipment"
-                      onChange={e => {setcollectingEquipment(e.target.value)}} />
+                      onChange={e => {setcollectingEquipment(e.target.value)}} value={collectingEquipment} />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="date">
                     <Form.Label>Date & time</Form.Label>
                     <Form.Control required placeholder="Date & time" name="date"
-                      onChange={e => {setdate(e.target.value)}} />
+                      onChange={e => {setdate(e.target.value)}} value={date} />
                   </Form.Group>
-
-                  <button className="btn-submit" type="submit">SUBMIT FORM</button>
+                  
                 </Col>
+              </Row>
+              <Row className="btn-div">
+                <button className="btn-submit w-45 mb-3" type="submit">SUBMIT FORM</button>
+                {showDanger && 
+                  <Alert variant="danger" className="alert-div">
+                    {collectionStatus}
+                  </Alert>
+                }
+                {showSuccess && 
+                  <Alert variant="success" className="alert-div">
+                    {collectionStatus}
+                  </Alert>
+                }
               </Row>
             </Form>
           </Card.Body>
         </Card>
-        <h1>{collectionStatus}</h1>
       </Container>
     </div>
   );
