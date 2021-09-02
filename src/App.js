@@ -11,11 +11,8 @@ import PasswordConfirm from './pages/confirmation/PasswordConfirm';
 import SignupConfirm from './pages/confirmation/SignupConfirm';
 import LoginConfirm from './pages/confirmation/LoginConfirm';
 import Dash from './pages/Dash';
-// import Footer from './pages/components/Footer';
 import AdminRoute from './pages/routes/AdminRoute';
 import CollectorRoute from './pages/routes/CollectorRoute';
-// import axios from 'axios';
-// import ProtectedRoute from './pages/routes/ProtectedRoute';
 
 function App() {
 
