@@ -13,6 +13,7 @@ import CollectorNavbar from './components/CollectorNavbar';
 import './App.css';
 
 
+
 function CollectionForm() {
 
   const [collectionPoint, setcollectionPoint] = useState("");
@@ -100,17 +101,6 @@ function CollectionForm() {
     )
   }
 
-  // const generateHashCollection = () => {
-  //   return (
-  //     '0x' + crypto
-  //     .createHash('sha256')
-  //     .update(
-  //       params.data
-  //     )
-  //     .digest('hex')
-  //   );
-  // };
-
 
   return (
     <div className="bg-light">
@@ -168,6 +158,7 @@ function CollectionForm() {
                     <Form.Control required placeholder="Date & time" name="date"
                       onChange={e => {setdate(e.target.value)}} value={date} />
                   </Form.Group>
+
                   
                 </Col>
               </Row>

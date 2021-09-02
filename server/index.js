@@ -30,6 +30,7 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie:{
+            httpOnly: false,
             expires: 60 * 60 * 24,
         },
     })
@@ -93,7 +94,7 @@ app.get('/login', (req, res)=> {
     if (req.session.user) {
         res.send({loggedIn: true, user: req.session.user, auth: true});
     } else {
-        res.send({loggedIn: false, auth: true});
+        res.send({loggedIn: false, auth: false});
     }
 });
 
@@ -108,24 +109,25 @@ app.post('/login', (req, res)=> {
             if (err) {
                 res.send({err: err});
             } 
-            
-            if ( result.length > 0){
-                bcrypt.compare(password, result[0].password, (error, response) => {
-                    if(response){
-                        
-                        const id = result[0].id;
-                        const token = jwt.sign({id}, "jwtSecret", {
-                            expiresIn : 300,
-                        });
+            if(result){
+                if ( result.length > 0){
+                    bcrypt.compare(password, result[0].password, (error, response) => {
+                        if(response){
+                            
+                            const id = result[0].id;
+                            const token = jwt.sign({id}, "jwtSecret", {
+                                expiresIn : 300,
+                            });
 
-                        req.session.user = result;
-                        res.json({auth: true, token: token, result: result});
-                    } else {
-                        res.json({auth: false,  message: "Wrong User Name, Password Combination",});
-                    }
-                });
-            }else{
-                res.json({auth: false,  message: "This User doesn't exist"});
+                            req.session.user = result;
+                            res.json({auth: true, token: token, result: result});
+                        } else {
+                            res.json({auth: false,  message: "Wrong User Name, Password Combination",});
+                        }
+                    });
+                }else{
+                    res.json({auth: false,  message: "This User doesn't exist"});
+                }
             }
         }
     );

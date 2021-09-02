@@ -17,6 +17,7 @@ function Login(){
   const [password, setpassword] = useState("");
   const [LoginStatus, setLoginStatus] = useState("");
   const [auth,setauth] = useState(false);
+  const [islogged, setislogged] = useState(false);
   const [show, setshow] = useState(false);
   
   axios.defaults.withCredentials = true;
@@ -31,7 +32,13 @@ function Login(){
       (response) => {
         if(!response.data.auth){
           setshow(true);
-          setLoginStatus(response.data.message);
+          console.log(response);
+          if(response.data.err){
+            setLoginStatus(response.data.message);
+          }
+          if(response.data.err){
+            setLoginStatus("Database Connection Refused with Error Code: "+response.data.err.errno);
+          }
         }else{
           sessionStorage.setItem("token", response.data.token);
           sessionStorage.setItem("user", response.data.result[0].username);
@@ -43,6 +50,7 @@ function Login(){
     ).catch(
       (err) => {
         setLoginStatus(err.message);
+        console.log(err);
         setshow(true);
       }
     )
@@ -52,7 +60,11 @@ function Login(){
     axios.get('http://localhost:3001/login').then(
       (response) => {
         if ( response.data.loggedIn === true){
-          setauth(true);
+          sessionStorage.setItem("user", response.data.user[0].username);
+          sessionStorage.setItem("acctype", response.data.user[0].type);
+          sessionStorage.setItem("user", response.data.user );
+          sessionStorage.setItem("isAuth", response.data.auth);
+          setislogged(true);
         }else{
           console.log(response);
         }
@@ -105,6 +117,7 @@ function Login(){
         </Card>
       </Container>
       {auth && <Redirect exact to="/loginconfirm" />}
+      {islogged && <Redirect exact to="/alreadyloggedin" />}
     </div>
   );
 }

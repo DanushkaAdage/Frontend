@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2021 at 07:01 AM
+-- Generation Time: Sep 02, 2021 at 02:45 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -44,8 +44,7 @@ CREATE TABLE `collectiondata` (
 
 INSERT INTO `collectiondata` (`collectionid`, `collectionpoint`, `collectedby`, `wastetype`, `collectingequipment`, `quantity`, `dateandtime`, `tippingpoint`) VALUES
 (1, 'Kegalle', 'Robinson', 'Plastic', 'Truck, Bin', 27, '31/08/2021 12:02:05 PM', 'Insert Point'),
-(2, 'Mawnella', 'Atkin', 'Food', 'Bin', 52, '01/09/2021 01:32:45 PM', 'Insert Point'),
-(3, 'Kandy', 'Mikaelson', 'Paper', 'Truck', 31, '01/09/2021 09:15:15 AM', 'Insert Point');
+(2, 'Mawnella', 'Atkin', 'Food', 'Bin', 52, '01/09/2021 01:32:45 PM', 'Insert Point');
 
 -- --------------------------------------------------------
 
@@ -95,6 +94,7 @@ CREATE TABLE `reviewedform` (
 --
 
 INSERT INTO `reviewedform` (`collectionid`, `collectionpoint`, `collectedby`, `wastetype`, `collectingequipment`, `quantity`, `dateandtime`, `tippingpoint`) VALUES
+(3, 'Kandy', 'Mikaelson', 'Paper', 'Truck', 31, '01/09/2021 09:15:15 AM', 'Colombo'),
 (4, '542', '5152', '512', '5612', 512, '512', '55'),
 (5, 'Colombo', 'Food', '23', 'Klaus', 0, '8/31/2021, 7:06:48 PM', '55');
 

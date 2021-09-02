@@ -10,7 +10,7 @@ import Navibar from '../components/Navibar';
 import img from '../img.png'
 import '../App.css';
 
-function LoginConfirm() {
+function AlreadyLoggedin() {
   return (
     <div className="bg-light">
       <Navibar />
@@ -19,7 +19,7 @@ function LoginConfirm() {
             <Card.Body>
                 <Card.Title align="center">
                     <img alt="Complete" src={img} width="60" className="pb-3" /> <br />
-                    You Successfully Signed In!
+                    You are already successfully Signed In!
                 </Card.Title>
                 <Card.Subtitle align="center" className="mb-2 text-muted size-12">Please go to your Home Page</Card.Subtitle>
                 <Form className="wastecollectionform">
@@ -38,4 +38,4 @@ function LoginConfirm() {
   );
 }
 
-export default LoginConfirm;
+export default AlreadyLoggedin;

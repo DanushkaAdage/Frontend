@@ -13,6 +13,7 @@ import LoginConfirm from './pages/confirmation/LoginConfirm';
 import Dash from './pages/Dash';
 import AdminRoute from './pages/routes/AdminRoute';
 import CollectorRoute from './pages/routes/CollectorRoute';
+import AlreadyLoggedin from './pages/confirmation/AlreadyLoggedin';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/passwordconfirm" exact component={PasswordConfirm} />
             <Route path="/signupconfirm" exact component={SignupConfirm} />
             <Route path="/loginconfirm" exact component={LoginConfirm} />
+            <Route path="/alreadyloggedin" exact component={AlreadyLoggedin} />
             <Route path="/login" exact component={Login} />
           </Switch>
         </Router>

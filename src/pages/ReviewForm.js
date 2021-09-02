@@ -91,13 +91,11 @@ function Reviewform() {
     const [reviewData, setreviewData] = useState([]);
     const [originalData,setoriginalData] = useState([]);
     const [skipPageReset, setSkipPageReset] = useState(false);
-    const [res,setres] = useState();
 
     useEffect(() => {
         axios.get('http://localhost:3001/reviewform').then(
             (response) => {
                 setreviewData( response.data.result);
-                setres(response);
                 setoriginalData( response.data.result);
             }
         ).catch(
