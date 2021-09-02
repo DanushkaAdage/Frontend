@@ -13,6 +13,8 @@ yarn add react-router-dom
 
 yarn add axios
 
+yarn add react-table
+
 #--In Node server
 
 npm install
