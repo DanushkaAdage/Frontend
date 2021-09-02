@@ -16,7 +16,7 @@ import { Checkbox } from './components/Checkbox';
 
 
 
-function Reviewform() {
+function ReviewTable() {
     // Create an editable cell renderer
     const EditableCell = ({
         value: initialValue,
@@ -306,4 +306,4 @@ function Reviewform() {
     );
 }
 
-export default Reviewform;
+export default ReviewTable;

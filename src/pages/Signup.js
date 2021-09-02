@@ -35,7 +35,7 @@ function Signup() {
         (response) => {
           console.log(response);
           if(!response.err){
-            if(response.data.message.sqlMessage){
+            if(response.data.err){
               setSigninStatus("This User Name is already in use.");
               setRegStatus(false);
               setshow(true);
@@ -50,7 +50,8 @@ function Signup() {
         }
       ).catch(
         (err) => {
-          console.log(err);
+          console.log(err.message);
+          setshow(true);
         }
       )
     
@@ -102,8 +103,8 @@ function Signup() {
                         <Form.Group className="mb-3" controlId="accounttype">
                             <Form.Label>Account Type</Form.Label>
                             <Form.Select required aria-label="Default select example" name="accounttype"
-                              onChange={e => {setaccounttype(e.target.value)}} >
-                                <option value="" disabled selected>Account Type</option>
+                              onChange={e => {setaccounttype(e.target.value)}} value={accounttype} >
+                                <option value="" disabled defaultValue>Account Type</option>
                                 <option value="Admin">Admin</option>
                                 <option value="Collector">Collector</option>
                             </Form.Select>

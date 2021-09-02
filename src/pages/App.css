@@ -105,6 +105,21 @@ option{
   border-style: solid;
   border-radius: 50px;
 }
+.btn-reset{
+  color: rgb(175, 79, 1);
+  background-color: white;
+  padding-top: 8px;
+  margin-right: 20px;
+  padding-bottom: 8px;
+  margin-top: 20px;
+  width: 230px;
+  font-weight: 700;
+  font-size: 11pt;
+  border-width: 2px;
+  border-color: rgb(175, 79, 1);
+  border-style: solid;
+  border-radius: 50px;
+}
 .btn-save{
   color: rgb(1, 86, 155);
   background-color: white;
@@ -121,8 +136,9 @@ option{
   border-radius: 50px;
 }
 .tipP{
-  width: 125px;
+  padding: 2px 5px;
   margin: 0;
+  color: rgb(1, 86, 155);
 }
 
 .topbar .nav-link{
@@ -164,6 +180,7 @@ option{
 #review-table tbody{
   color: rgb(1, 86, 155);
   font-size: 11pt;
+  vertical-align: middle;
 }
 
 .home-logo{

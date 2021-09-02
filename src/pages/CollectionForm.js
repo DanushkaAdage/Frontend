@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
+// import crypto from 'cryptojs';
 import Container from 'react-bootstrap/Container';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Alert from 'react-bootstrap/Alert';
@@ -36,7 +37,11 @@ function CollectionForm() {
       setquantity(savedValues.quantity);
       setcollectedBy(savedValues.collectedBy);
       setcollectingEquipment(savedValues.collectingEquipment);
-      setdate(savedValues.date);
+      if(savedValues.date === ""){
+        setdate(new Date().toLocaleString());
+      }else{
+        setdate(savedValues.date);
+      }
     }else{
       setdate(curTime);
     }
@@ -72,8 +77,8 @@ function CollectionForm() {
       (response) => {
         console.log(response);
         if(!response.err){
-          if(response.data.message.sqlMessage){
-            setcollectionStatus(response.data.message.sqlMessage);
+          if(response.data.err){
+            setcollectionStatus(response.data.err.sqlMessage);
             setshowDanger(true);
           } else {
             localStorage.clear();
@@ -89,11 +94,22 @@ function CollectionForm() {
     ).catch(
       (err) => {
         console.log(err);
-        setcollectionStatus(err);
-        setshowDanger(false);
+        setcollectionStatus(err.message);
+        setshowDanger(true);
       }
     )
   }
+
+  // const generateHashCollection = () => {
+  //   return (
+  //     '0x' + crypto
+  //     .createHash('sha256')
+  //     .update(
+  //       params.data
+  //     )
+  //     .digest('hex')
+  //   );
+  // };
 
 
   return (
@@ -119,15 +135,15 @@ function CollectionForm() {
                     <Form.Select required aria-label="Default select example" name="wasteType"
                       onChange={e => {setwasteType(e.target.value)}} value={wasteType} >
                       <option value="" disabled defaultValue>Waste Type</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      <option value="Plastic">Plastic</option>
+                      <option value="Food">Food</option>
+                      <option value="Paper">Paper</option>
                     </Form.Select>
                   </Form.Group>
 
                   <Form.Label>Quantity</Form.Label>
-                  <InputGroup className="mb-3" controlId="quantity">
-                    <Form.Control required type="text" placeholder="Quantity" name="quantity" aria-label="quantity" aria-describedby="quantity"
+                  <InputGroup className="mb-3">
+                    <Form.Control id="quantity" required type="text" placeholder="Quantity" name="quantity" aria-label="quantity" aria-describedby="quantity"
                       onChange={e => {setquantity(e.target.value)}} value={quantity} />
                     <InputGroup.Text id="quantity">Kg</InputGroup.Text>
                   </InputGroup>

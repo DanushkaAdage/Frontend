@@ -27,10 +27,8 @@ function Login(){
       username : username,
       password : password
     };
-    console.log(data);
     axios.post('http://localhost:3001/login', data).then(
       (response) => {
-        console.log(response);
         if(!response.data.auth){
           setshow(true);
           setLoginStatus(response.data.message);
@@ -44,8 +42,8 @@ function Login(){
       }
     ).catch(
       (err) => {
+        setLoginStatus(err.message);
         setshow(true);
-        setLoginStatus(err);
       }
     )
   }
@@ -54,7 +52,7 @@ function Login(){
     axios.get('http://localhost:3001/login').then(
       (response) => {
         if ( response.data.loggedIn === true){
-          // setauth(true);
+          setauth(true);
         }else{
           console.log(response);
         }
