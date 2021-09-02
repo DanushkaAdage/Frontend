@@ -121,7 +121,7 @@ app.post('/login', (req, res)=> {
                         req.session.user = result;
                         res.json({auth: true, token: token, result: result});
                     } else {
-                        res.json({auth: false,  message: "Wrong User Name, Password Combination"});
+                        res.json({auth: false,  message: "Wrong User Name, Password Combination",});
                     }
                 });
             }else{
@@ -139,20 +139,92 @@ app.post('/collectionform', (req, res)=> {
     const collectedby = req.body.collectedby;
     const collectingequipment = req.body.collectingequipment;
     const date = req.body.date;
+    const tippingpoint = "Insert Point"
 
     db.query(
         "INSERT INTO `collectionform` (`collectionpoint`, `collectedby`, `wastetype`, `collectingequipment`, `quantity`, `dateandtime`) VALUES (?,?,?,?,?,?)",
-        [collectionpoint, wastetype, quantity, collectedby, collectingequipment, date],
+        [collectionpoint, collectedby, wastetype, collectingequipment, quantity, date],
         (err, result)=>{
             if (err) {
                 res.send({err: err});
             } 
             if (result){
-                res.send({message: "Collection Successfully Submited"});
+                // res.send({message: "Collection Successfully Submited"});
+                db.query(
+                    "INSERT INTO `collectiondata` (`collectionpoint`, `collectedby`, `wastetype`, `collectingequipment`, `quantity`, `dateandtime`, `tippingpoint`) VALUES (?,?,?,?,?,?,?)",
+                    [collectionpoint, collectedby, wastetype, collectingequipment, quantity, date, tippingpoint],
+                    (err, result)=>{
+                        if (err) {
+                            res.send({err: err});
+                        } 
+                        if (result){
+                            res.send({message: "Collection Successfully Submited"});
+                        }
+                    }
+                );
             }
         }
     );
 });
+
+app.get('/reviewform', (req, res)=> {
+    db.query(
+        "SELECT * FROM `collectiondata`",
+        (err, result)=>{
+            if (err) {
+                res.send({err: err});
+            } 
+            if (result){
+                res.json({result});
+            }
+        }
+    );
+});
+
+app.post('/reviewsubmit', (req, res)=> {
+
+    const data = req.body;
+    data.forEach(i => {
+        const collectionid = i.collectionid;
+        const collectionpoint = i.collectionpoint;
+        const collectedby = i.collectedby;
+        const wastetype = i.wastetype;
+        const collectingequipment = i.collectingequipment;
+        const quantity = i.quantity;
+        const date = i.dateandtime;
+        const tippingpoint = i.tippingpoint;
+
+        if(tippingpoint != "Insert Point"){
+            db.query(
+                "INSERT INTO `reviewedform` (`collectionid`, `collectionpoint`, `collectedby`, `wastetype`, `collectingequipment`, `quantity`, `dateandtime`, `tippingpoint`) VALUES (?,?,?,?,?,?,?,?)",
+                [collectionid ,collectionpoint, collectedby, wastetype, collectingequipment, quantity, date, tippingpoint],
+                (err, result)=>{
+                    if (err) {
+                        res.send({err: err});
+                    } 
+                    if (result){
+                        // res.send({message: "Collection Successfully Submited"});
+                        db.query(
+                            "DELETE FROM `collectiondata` WHERE `collectiondata`.`collectionid` = ?",
+                            collectionid,
+                            (err, result)=>{
+                                if (err) {
+                                    res.send({err: err});
+                                } 
+                                if (result){
+                                    res.send({message: "Reviewed Collections are Successfully Submited"});
+                                }
+                            }
+                        );
+                    }
+                }
+            );
+        }else{
+            res.send({err: "Please Fill the Tipping Point to the Checked Collections"});
+        }
+    });
+});
+
 
 app.listen(3001, () => {
     console.log("running server")
