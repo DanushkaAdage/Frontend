@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Logo from './../logo.png';
 import Container from 'react-bootstrap/Container';
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 
 
-function Navibar() {
+function LoggedinNav(Page) {
+    const [islogout, setislogout] = useState(false);
+    const logout = () =>{
+        localStorage.clear();
+        sessionStorage.clear();
+        document.cookie.split(";").forEach((c) => {
+            document.cookie = c
+              .replace(/^ +/, "")
+              .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        });
+        setislogout(true);
+    }
     return (
         <div>
             {/* <Container>
@@ -18,7 +29,7 @@ function Navibar() {
             </Container> */}
             <Navbar className="nav-div" expand="lg">
                 <Container>
-                    <Navbar.Brand href="/">
+                    <Navbar.Brand href="/reviewform">
                         <img
                         alt="SafeEnviro"
                         src={Logo}
@@ -30,21 +41,17 @@ function Navibar() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse className=" justify-content-end"  id="basic-navbar-nav">
                         <Nav>
-                            {/* <NavLink className="nav-link hover" activeClassName="active" to="/collectionform">Collection Form</NavLink>
 
-                            <NavLink className="nav-link hover" activeClassName="active" to="/reviewform">Review Table</NavLink> */}
+                            <NavLink className="nav-link hover active" activeClassName="active" to="/dash">{Page}</NavLink>
 
-                            <NavLink className="nav-link hover" activeClassName="active" to="/analytics">Analytics</NavLink>
-
-                            <NavLink className="nav-link" activeClassName="active" to="/login">
-                                <button className="signin">SIGN IN</button>
-                            </NavLink>
+                            <button className="signin" onClick={logout}>SIGN OUT</button>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+            {islogout && <Redirect to="/login" />}
         </div>
     );
 }
 
-export default Navibar;
+export default LoggedinNav;
