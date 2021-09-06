@@ -33,7 +33,7 @@ function Login(){
         if(!response.data.auth){
           setshow(true);
           console.log(response);
-          if(response.data.err){
+          if(!response.data.err){
             setLoginStatus(response.data.message);
           }
           if(response.data.err){
