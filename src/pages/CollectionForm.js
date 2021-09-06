@@ -9,19 +9,20 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import CollectorNavbar from './components/CollectorNavbar';
 import './App.css';
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import NavCol from './components/NavCol';
 
 
 function CollectionForm() {
 
+  const [startDate, setStartDate] = useState(new Date());
   const [collectionPoint, setcollectionPoint] = useState("");
   const [wasteType, setwasteType] = useState("");
   const [quantity, setquantity] = useState("");
   const [collectedBy, setcollectedBy] = useState("");
   const [collectingEquipment, setcollectingEquipment] = useState("");
-  const [date, setdate] = useState("");
   const [collectionStatus, setcollectionStatus] = useState("");
   const [showDanger, setshowDanger] = useState(false);
   const [showSuccess, setshowSuccess] = useState(false);
@@ -29,7 +30,6 @@ function CollectionForm() {
   
 
   useEffect(() => {
-    const curTime = new Date().toLocaleString();
     const formdata = window.localStorage.getItem('collection-data');
     const savedValues = (JSON.parse(formdata));
     if(savedValues){
@@ -38,19 +38,12 @@ function CollectionForm() {
       setquantity(savedValues.quantity);
       setcollectedBy(savedValues.collectedBy);
       setcollectingEquipment(savedValues.collectingEquipment);
-      if(savedValues.date === ""){
-        setdate(new Date().toLocaleString());
-      }else{
-        setdate(savedValues.date);
-      }
-    }else{
-      setdate(curTime);
     }
     
   }, []);
 
   useEffect(() => {
-    const formValues = {collectionPoint, wasteType, quantity,collectedBy, collectingEquipment, date}
+    const formValues = {collectionPoint, wasteType, quantity,collectedBy, collectingEquipment}
     window.localStorage.setItem('collection-data', JSON.stringify(formValues));
   });
 
@@ -60,7 +53,6 @@ function CollectionForm() {
     setquantity("");
     setcollectedBy("");
     setcollectingEquipment("");
-    setdate(new Date().toLocaleString());
   }
 
   const collection = e => {
@@ -71,7 +63,7 @@ function CollectionForm() {
       quantity : quantity,
       collectedby : collectedBy,
       collectingequipment : collectingEquipment,
-      date : date
+      date : startDate
     };
     console.log(data);
     axios.post('http://localhost:3001/collectionform', data).then(
@@ -104,7 +96,7 @@ function CollectionForm() {
 
   return (
     <div className="bg-light">
-      <CollectorNavbar />
+      <NavCol />
       <Container className="justify-content-center col-lg-9 col-md-10 col-sm-12 card-div">
         <Card className="w-100">
           <Card.Body>
@@ -133,7 +125,7 @@ function CollectionForm() {
 
                   <Form.Label>Quantity</Form.Label>
                   <InputGroup className="mb-3">
-                    <Form.Control id="quantity" required type="text" placeholder="Quantity" name="quantity" aria-label="quantity" aria-describedby="quantity"
+                    <Form.Control id="quantity" required type="number" min="0" step="any" placeholder="Quantity" name="quantity" aria-label="quantity" aria-describedby="quantity"
                       onChange={e => {setquantity(e.target.value)}} value={quantity} />
                     <InputGroup.Text id="quantity">Kg</InputGroup.Text>
                   </InputGroup>
@@ -155,10 +147,8 @@ function CollectionForm() {
 
                   <Form.Group className="mb-3" controlId="date">
                     <Form.Label>Date & time</Form.Label>
-                    <Form.Control required placeholder="Date & time" name="date"
-                      onChange={e => {setdate(e.target.value)}} value={date} />
+                    <DatePicker className="form-control" required name="date" selected={startDate} onChange={(date) => setStartDate(date)} showTimeSelect dateFormat="Pp" />
                   </Form.Group>
-
                   
                 </Col>
               </Row>

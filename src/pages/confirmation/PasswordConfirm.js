@@ -6,14 +6,15 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Navibar from '../components/Navibar';
 import img from '../img.png'
 import '../App.css';
+import NavCol from '../components/NavCol';
+
 
 function PasswordConfirm() {
   return (
     <div className="bg-light">
-      <Navibar />
+      <NavCol />
       <Container className="justify-content-center card-div">
         <Card className="home-card">
             <Card.Body>
@@ -22,7 +23,7 @@ function PasswordConfirm() {
                     Confirmation Email has been sent!
                 </Card.Title>
                 <Card.Subtitle align="center" className="mb-2 text-muted size-12">Please check your email inbox and click on "Reset Password".</Card.Subtitle>
-                <Form className="wastecollectionform">
+                <Form>
                     <Row>
                         <Col>
                           <Link to="/login">

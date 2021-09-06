@@ -7,12 +7,11 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
-import AdminNavbar from './components/AdminNavbar';
 import axios from 'axios';
 import './App.css';
-// import { COLUMNS } from './components/columns';
 import { useTable, useRowSelect } from 'react-table';
 import { Checkbox } from './components/Checkbox';
+import NavCol from './components/NavCol';
 
 
 
@@ -41,7 +40,7 @@ function Reviewform() {
         setValue(initialValue)
         }, [initialValue])
 
-        return <input className="tipP" value={value} onChange={onChange} onBlur={onBlur} />
+        return <input className="tipP" placeholder="Insert Tipping Point" value={value} onChange={onChange} onBlur={onBlur} />
     }
 
     // Set our editable cell renderer as the default Cell renderer
@@ -216,7 +215,7 @@ function Reviewform() {
       
     return (
         <div className="bg-light">
-            <AdminNavbar />
+            <NavCol />
             <Container className="justify-content-center col-lg-9 col-md-10 col-sm-12 card-div">
             <Card className="w-100">
                 <Card.Body>
@@ -289,7 +288,7 @@ function Reviewform() {
                 </Card.Body>
             </Card>
             </Container>
-            <pre>
+            {/* <pre>
                 <code>
                     {JSON.stringify(
                         {
@@ -299,7 +298,7 @@ function Reviewform() {
                         2
                     )}
                 </code>
-            </pre>
+            </pre> */}
         </div>
     );
 }

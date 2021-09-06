@@ -6,16 +6,16 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Navibar from './components/Navibar';
 import Logo from './logo.png';
 import './App.css';
+import NavCol from './components/NavCol';
 
 function Home() {
   
 
   return (
     <div className="h-100">
-      <Navibar />
+      <NavCol />
       <Container className="justify-content-center card-div">
         <Card className="home-card">
           <Card.Body>

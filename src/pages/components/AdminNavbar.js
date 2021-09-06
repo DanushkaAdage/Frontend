@@ -29,7 +29,7 @@ function AdminNavbar() {
             </Container> */}
             <Navbar className="nav-div" expand="lg">
                 <Container>
-                    <Navbar.Brand href="/reviewform">
+                    <Navbar.Brand href="/analytics">
                         <img
                         alt="SafeEnviro"
                         src={Logo}
@@ -41,15 +41,16 @@ function AdminNavbar() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse className=" justify-content-end"  id="basic-navbar-nav">
                         <Nav>
+                            <NavLink className="nav-link hover" activeClassName="active" to="/analytics">Analytics</NavLink>
 
-                            <NavLink className="nav-link hover active" activeClassName="active" to="/reviewform">Review Table</NavLink>
+                            <NavLink className="nav-link hover" activeClassName="active" to="/reviewform">Review Table</NavLink>
 
                             <button className="signin" onClick={logout}>SIGN OUT</button>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            {islogout && <Redirect to="/login" />}
+            {islogout && <Redirect to="/logoutconfirm" />}
         </div>
     );
 }

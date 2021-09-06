@@ -16,11 +16,13 @@ import Dash from './pages/Dash';
 import AdminRoute from './pages/routes/AdminRoute';
 import CollectorRoute from './pages/routes/CollectorRoute';
 import AlreadyLoggedin from './pages/confirmation/AlreadyLoggedin';
+import LogoutConfirm from './pages/confirmation/LogoutConfirm';
 
 function App() {
 
   return (
       <div>
+        
         <Router>
           <Switch>
             <Route path="/" exact component={Home} />
@@ -36,6 +38,7 @@ function App() {
             <Route path="/login" exact component={Login} />
             <Route path="/analytics" exact component={Analytics} />
             <Route path="/reviewtable" exact component={ReviewTable} />
+            <Route path="/logoutconfirm" exact component={LogoutConfirm} />
           </Switch>
         </Router>
 

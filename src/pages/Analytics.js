@@ -7,52 +7,109 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
-import AdminNavbar from './components/AdminNavbar';
 import axios from 'axios';
 import './App.css';
 import { useTable, useRowSelect } from 'react-table';
-
+import { DataGrid } from '@mui/x-data-grid';
+import NavCol from './components/NavCol';
 
 
 function Analytics() {
+
+    const columns = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 95,
+            sortable: true,
+        },
+        {
+          field: 'collectionpoint',
+          headerName: 'Collection Point',
+          width: 180,
+          sortable: true,
+        },
+        {
+          field: 'collectedby',
+          headerName: 'Collected By',
+          width: 160,
+          sortable: true,
+        },
+        {
+          field: 'wastetype',
+          headerName: 'Waste Type',
+          width: 155,
+          sortable: true,
+        },
+        {
+          field: 'collectingequipment',
+          headerName: 'Collecting Equipment',
+          width: 215,
+          sortable: true,
+        },
+        {
+          field: 'quantity',
+          headerName: 'Quantity',
+          width: 140,
+          sortable: true,
+        },
+        {
+          field: 'dateandtime',
+          headerName: 'Date & Time',
+          width: 155,
+          sortable: true,
+        },
+        {
+          field: 'tippingpoint',
+          headerName: 'Tipping Point',
+          width: 165,
+          sortable: true,
+        },
+        {
+          field: 'blockid',
+          headerName: 'Block ID',
+          width: 160,
+          sortable: true,
+        },
+    ];
     
-    const COLUMNS =[
-        {
-            Header : 'Id',
-            accessor: 'collectionid'
-        },
-        {
-            Header : 'Collection Point',
-            accessor: 'collectionpoint'
-        },
-        {
-            Header : 'Collected By',
-            accessor: 'collectedby'
-        },
-        {
-            Header : 'Waste Type',
-            accessor: 'wastetype'
-        },
-        {
-            Header : 'Collecting Equipment',
-            accessor: 'collectingequipment'
-        },
-        {
-            Header : 'Quantity',
-            accessor: 'quantity'
-        },
-        {
-            Header : 'Date & Time',
-            accessor: 'dateandtime'
-        },
-        {
-            Header: 'Tipping Point',
-            accessor: 'tippingpoint',
-        },
-    ]
+    // const COLUMNS =[
+    //     {
+    //         Header : 'Id',
+    //         accessor: 'collectionid'
+    //     },
+    //     {
+    //         Header : 'Collection Point',
+    //         accessor: 'collectionpoint'
+    //     },
+    //     {
+    //         Header : 'Collected By',
+    //         accessor: 'collectedby'
+    //     },
+    //     {
+    //         Header : 'Waste Type',
+    //         accessor: 'wastetype'
+    //     },
+    //     {
+    //         Header : 'Collecting Equipment',
+    //         accessor: 'collectingequipment'
+    //     },
+    //     {
+    //         Header : 'Quantity',
+    //         accessor: 'quantity'
+    //     },
+    //     {
+    //         Header : 'Date & Time',
+    //         accessor: 'dateandtime'
+    //     },
+    //     {
+    //         Header: 'Tipping Point',
+    //         accessor: 'tippingpoint',
+    //     },
+    // ]
    
-    const [show, setshow] = useState(false);
-    const [reviewStatus, setreviewStatus] = useState("");
+    // const [show, setshow] = useState(false);
+    // const [reviewStatus, setreviewStatus] = useState("");
     const [reviewData, setreviewData] = useState([]);
 
     useEffect(() => {
@@ -63,105 +120,111 @@ function Analytics() {
         ).catch(
             (err) => {
                 console.log(err);
-                setshow(true);
-                setreviewStatus(err.message);
+                // setshow(true);
+                // setreviewStatus(err.message);
             }
         )
     },[reviewData])
 
-    const columns = useMemo(() => COLUMNS, []);
+    // const columns = useMemo(() => COLUMNS, []);
     // const data = useMemo(() => reviewData, []);
 
    
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-        row
+    // const {
+    //     getTableProps,
+    //     getTableBodyProps,
+    //     headerGroups,
+    //     rows,
+    //     prepareRow,
 
-    } = useTable({
-        columns,
-        data:reviewData,
-    },
-    useRowSelect,
-        (hooks) => {
-            hooks.visibleColumns.push((columns) => {
-                return [
-                    ...columns,
-                    {
-                        id: 'blockid',
-                        Header : 'Block Id',
-                        Cell: ({ row }) => (
-                            <p className="mb-0">{row.id}</p>
-                        )
-                    }
-                ]
-            })
-        }
-    );
+    // } = useTable({
+    //     columns,
+    //     data:reviewData,
+    // },
+    // useRowSelect,
+    //     (hooks) => {
+    //         hooks.visibleColumns.push((columns) => {
+    //             return [
+    //                 ...columns,
+    //                 {
+    //                     id: 'blockid',
+    //                     Header : 'Block Id',
+    //                     Cell: ({ row }) => (
+    //                         <p className="mb-0">{row.id}</p>
+    //                     )
+    //                 }
+    //             ]
+    //         })
+    //     }
+    // );
       
     return (
         <div className="bg-light">
-            <AdminNavbar />
-            <Container className="justify-content-center col-lg-9 col-md-10 col-sm-12 card-div">
-            <Card className="w-100">
-                <Card.Body>
-                <Card.Title><h2>Analytics</h2></Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">.</Card.Subtitle>
-                <Form className="wastereviewform">
-                    <Row>
-                        <Col>
-                            <Table id="review-table" bordered hover responsive size="sm" {...getTableProps}>
-                                <thead>
-                                    {(headerGroups.map((headerGroup) =>(
-                                        <tr {...headerGroup.getHeaderGroupProps()}>
-                                            {headerGroup.headers.map((column) => (
-                                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                                            ))}
-                                        </tr>
-                                        )))
-                                    }
-                                </thead>
-                                <tbody className="reviewtbody" {...getTableBodyProps}> 
-                                    { rows.length > 0 ? (
-                                            rows.map((row) => {
-                                                prepareRow(row)
-                                                return (
-                                                    <tr {...row.getRowProps()}>
-                                                        {row.cells.map((cell) =>{
-                                                            return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                                        })}
+            <NavCol />
+            <Container fluid className="col-lg-12 col-md-12 col-sm-12 card-div">
+                 <Card className="w-100">
+                {/*    <Card.Body>
+                        <Card.Title><h2>Analytics</h2></Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">.</Card.Subtitle>
+                        <Form className="wastereviewform">
+                            <Row>
+                                <Col>
+                                    <Table id="review-table" bordered hover responsive size="sm" {...getTableProps}>
+                                        <thead>
+                                            {(headerGroups.map((headerGroup) =>(
+                                                <tr {...headerGroup.getHeaderGroupProps()}>
+                                                    {headerGroup.headers.map((column) => (
+                                                        <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                                                    ))}
+                                                </tr>
+                                                )))
+                                            }
+                                        </thead>
+                                        <tbody className="reviewtbody" {...getTableBodyProps}> 
+                                            { rows.length > 0 ? (
+                                                    rows.map((row) => {
+                                                        prepareRow(row)
+                                                        return (
+                                                            <tr {...row.getRowProps()}>
+                                                                {row.cells.map((cell) =>{
+                                                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                                                })}
+                                                            </tr>
+                                                        );
+                                                    })
+                                                ):(
+                                                    <tr>
+                                                        <td colSpan="9">
+                                                            <Alert variant="danger" className="alert-div mb-0">
+                                                                This Table doesn't have any data for now. 
+                                                            </Alert>
+                                                        </td>
+                                                        
                                                     </tr>
-                                                );
-                                            })
-                                        ):(
-                                            <tr>
-                                                <td colSpan="9">
-                                                    <Alert variant="danger" className="alert-div mb-0">
-                                                        This Table doesn't have any data for now. 
-                                                    </Alert>
-                                                </td>
-                                                
-                                            </tr>
-                                        )
-                                    }
-                                </tbody>
-                            </Table>
-                        </Col>
-                    </Row>
-                    <Row className="mt-3">
-                        {show && 
-                            <Alert variant="danger" className="alert-div">
-                                {reviewStatus}
-                            </Alert>
-                            
-                        }
-                    </Row>
-                </Form>
-                </Card.Body>
-            </Card>
+                                                )
+                                            }
+                                        </tbody>
+                                    </Table>
+                                </Col>
+                            </Row>
+                            <Row className="mt-3">
+                                {show && 
+                                    <Alert variant="danger" className="alert-div">
+                                        {reviewStatus}
+                                    </Alert>
+                                    
+                                }
+                            </Row>
+                        </Form>
+                    </Card.Body>
+                </Card> 
+                <Card>*/}
+                    <DataGrid autoHeight 
+                        rows={reviewData}
+                        columns={columns}
+                        pageSize={3}
+                    />
+                </Card>
             </Container>
         </div>
     );

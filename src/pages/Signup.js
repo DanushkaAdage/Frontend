@@ -8,7 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Navibar from './components/Navibar';
+import NavCol from './components/NavCol';
 import './App.css';
 
 function Signup() {
@@ -59,7 +59,7 @@ function Signup() {
 
   return (
     <div className="bg-light">
-      <Navibar />
+      <NavCol />
       <Container className="justify-content-center card-div">
         <Card className="home-card">
           <Card.Body>
