@@ -227,6 +227,19 @@ app.post('/reviewsubmit', (req, res)=> {
     });
 });
 
+app.get('/analytics', (req, res)=> {
+    db.query(
+        "SELECT * FROM `reviewedform`",
+        (err, result)=>{
+            if (err) {
+                res.send({err: err});
+            } 
+            if (result){
+                res.json({result});
+            }
+        }
+    );
+});
 
 app.listen(3001, () => {
     console.log("running server")
