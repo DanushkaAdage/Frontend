@@ -140,7 +140,9 @@ app.post('/collectionform', (req, res)=> {
     const quantity = req.body.quantity;
     const collectedby = req.body.collectedby;
     const collectingequipment = req.body.collectingequipment;
-    const date = req.body.date;
+    const datetime = req.body.date;
+    const zone = req.body.zone.label;
+    const date = datetime +" "+ zone;
 
     db.query(
         "INSERT INTO `collectionform` (`collectionpoint`, `collectedby`, `wastetype`, `collectingequipment`, `quantity`, `dateandtime`) VALUES (?,?,?,?,?,?)",

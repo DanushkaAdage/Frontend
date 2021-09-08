@@ -267,7 +267,7 @@ function Reviewform() {
                             <button className="btn-reset" type="reset" onClick={resetData}>RESET</button>
                         </Col>
                         <Col className="flex justify-content-end">
-                            <button className="btn-save" type="save">SAVE</button>
+                            <button className="btn-rem" type="">REMOVE DATA</button>
                             <button className="btn-sub" type="submit">SUBMIT FORM</button>
                         </Col>
                     </Row>

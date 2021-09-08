@@ -13,7 +13,8 @@ import './App.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import NavCol from './components/NavCol';
-
+import TimezoneSelect from 'react-timezone-select';
+import date from 'date-and-time';
 
 function CollectionForm() {
 
@@ -26,8 +27,9 @@ function CollectionForm() {
   const [collectionStatus, setcollectionStatus] = useState("");
   const [showDanger, setshowDanger] = useState(false);
   const [showSuccess, setshowSuccess] = useState(false);
+  const [selectedTimezone, setSelectedTimezone] = useState('');
 
-  
+  const Fdate = date.format(startDate, 'DD/MM/YYYY hh:mm A'); 
 
   useEffect(() => {
     const formdata = window.localStorage.getItem('collection-data');
@@ -38,12 +40,13 @@ function CollectionForm() {
       setquantity(savedValues.quantity);
       setcollectedBy(savedValues.collectedBy);
       setcollectingEquipment(savedValues.collectingEquipment);
+      setSelectedTimezone(savedValues.selectedTimezone);
     }
     
   }, []);
 
   useEffect(() => {
-    const formValues = {collectionPoint, wasteType, quantity,collectedBy, collectingEquipment}
+    const formValues = {collectionPoint, wasteType, quantity,collectedBy, collectingEquipment, selectedTimezone}
     window.localStorage.setItem('collection-data', JSON.stringify(formValues));
   });
 
@@ -53,6 +56,7 @@ function CollectionForm() {
     setquantity("");
     setcollectedBy("");
     setcollectingEquipment("");
+    setSelectedTimezone("");
   }
 
   const collection = e => {
@@ -63,7 +67,8 @@ function CollectionForm() {
       quantity : quantity,
       collectedby : collectedBy,
       collectingequipment : collectingEquipment,
-      date : startDate
+      date : Fdate,
+      zone : selectedTimezone
     };
     console.log(data);
     axios.post('http://localhost:3001/collectionform', data).then(
@@ -146,24 +151,38 @@ function CollectionForm() {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="date">
-                    <Form.Label>Date & time</Form.Label>
-                    <DatePicker className="form-control" required name="date" selected={startDate} onChange={(date) => setStartDate(date)} showTimeSelect dateFormat="Pp" />
+                    <Row>
+                      <Col lg={8} md={6} sm={12}>
+                        <Form.Label>Date & time</Form.Label>
+                        <DatePicker className="form-control" required name="date" 
+                          selected={startDate} onChange={(date) => setStartDate(date)} showTimeSelect dateFormat="Pp" />
+                      </Col>
+                      <Col lg={4} md={6} sm={12} className="ps-0">
+                        <Form.Label>Time Zone</Form.Label>
+                        <TimezoneSelect required placeholder="Time Zone" value={selectedTimezone} onChange={setSelectedTimezone} />
+                      </Col>
+                    </Row>
                   </Form.Group>
                   
                 </Col>
+                
               </Row>
               <Row className="btn-div">
-                <button className="btn-submit w-45 mb-3" type="submit">SUBMIT FORM</button>
-                {showDanger && 
-                  <Alert variant="danger" className="alert-div">
-                    {collectionStatus}
-                  </Alert>
-                }
-                {showSuccess && 
-                  <Alert variant="success" className="alert-div">
-                    {collectionStatus}
-                  </Alert>
-                }
+                <Col>
+                  <button className="btn-reset" onClick={formReset}>RESET</button>
+                  <button className="btn-submit w-45 mb-3" type="submit">SUBMIT FORM</button>
+                  {showDanger && 
+                    <Alert variant="danger" className="alert-div">
+                      {collectionStatus}
+                    </Alert>
+                  }
+                  {showSuccess && 
+                    <Alert variant="success" className="alert-div">
+                      {collectionStatus}
+                    </Alert>
+                  }
+                </Col>
+                
               </Row>
             </Form>
           </Card.Body>
