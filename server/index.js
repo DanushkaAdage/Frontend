@@ -228,6 +228,28 @@ app.post('/reviewsubmit', (req, res)=> {
     });
 });
 
+
+app.post('/removedata', (req, res)=> {
+
+    const data = req.body;
+    data.forEach(i => {
+        const collectionid = i.collectionid;
+        
+        db.query(
+            "DELETE FROM `collectiondata` WHERE `collectiondata`.`collectionid` = ?",
+            collectionid,
+            (err, result)=>{
+                if (err) {
+                    res.send(err);
+                } 
+                if (result){
+                    res.send({message: "Selected Collections are Successfully Removed"});
+                }
+            }
+        );
+    });
+});
+
 app.get('/analytics', (req, res)=> {
     db.query(
         "SELECT * FROM `reviewedform`",
