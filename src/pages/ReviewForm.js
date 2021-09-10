@@ -12,6 +12,7 @@ import './App.css';
 import { useTable, useRowSelect } from 'react-table';
 import { Checkbox } from './components/Checkbox';
 import NavCol from './components/NavCol';
+import swal from 'sweetalert';
 
 
 
@@ -209,8 +210,74 @@ function Reviewform() {
         )
     }
 
+
+    const removedata = e => {
+        e.preventDefault();
+        const data =  selectedFlatRows.map((row) => row.original);
+        console.log(data);
+        if(data.length === 0){
+            setreviewStatus("Select data to be removed!");
+            setshowDanger(true);
+            setTimeout(function(){setshowDanger(false)},5000);
+        } else {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, this data can not be recovered!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    axios.post('http://localhost:3001/removedata', data).then(
+                        (response) => {
+                            console.log(response);
+                            if(!response.err){
+                                if(response.data.err){
+                                    if(response.data.err.sqlMessage){
+                                        setreviewStatus(response.data.err.sqlMessage);
+                                        setshowDanger(true);
+                                        setTimeout(function(){setshowDanger(false)},5000);
+                                    }else{
+                                        setreviewStatus(response.data.err);
+                                        setshowDanger(true);
+                                        setTimeout(function(){setshowDanger(false)},5000);
+                                    }
+                                    
+                                } else {
+                                    setreviewStatus(response.data.message);
+                                    setshowSuccess(true);
+                                    // setTimeout(function(){setshowSuccess(false)},5000);
+                                    refresh();
+                                    setshowDanger(false);
+                                }
+                            } else {
+                                setreviewStatus(response.data.err);
+                                setshowDanger(true);
+                                setTimeout(function(){setshowDanger(false)},5000);
+                            }
+                        }
+                    ).catch(
+                        (err) => {
+                        console.log(err);
+                        setreviewStatus(err.message);
+                        setshowDanger(true);
+                        setTimeout(function(){setshowDanger(false)},5000);
+                        }
+                    )
+                } else {
+                    setreviewStatus("Your data is safe!");
+                    setshowSuccess(true);
+                    setTimeout(function(){setshowSuccess(false)},5000);
+                }
+            });
+        }
+        
+    }
+
+
     const refresh = () => {
-        setTimeout(function(){window.location.reload()},3000);
+        setTimeout(function(){window.location.reload()},3500);
     }
       
     return (
@@ -267,7 +334,7 @@ function Reviewform() {
                             <button className="btn-reset" type="reset" onClick={resetData}>RESET</button>
                         </Col>
                         <Col className="flex justify-content-end">
-                            <button className="btn-rem" type="">REMOVE DATA</button>
+                            <button className="btn-rem" onClick={removedata}>REMOVE DATA</button>
                             <button className="btn-sub" type="submit">SUBMIT FORM</button>
                         </Col>
                     </Row>
