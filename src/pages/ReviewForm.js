@@ -13,10 +13,90 @@ import { useTable, useRowSelect } from 'react-table';
 import { Checkbox } from './components/Checkbox';
 import NavCol from './components/NavCol';
 import swal from 'sweetalert';
+import CryptoJS from 'crypto-js';
+// import {scrypt, randomFill, createCipheriv } from 'crypto';
+import Storehash from './../contracts/Storehash.json';
+import Web3 from 'web3';
+import { stringify } from 'uuid';
 
 
 
 function Reviewform() {
+
+    // function encryptData(data){
+    //     const iv = CryptoJS.enc.Base64.parse("");
+    //     const key = CryptoJS.SHA256("message");
+    //     if(typeof data == "string") {
+    //         data = data.slice();
+    //         const encryptString = CryptoJS.AES.encrypt( data, key, {
+    //             iv: iv,
+    //             mode: CryptoJS.mode.CBC,
+    //             padding: CryptoJS.pad.pkcs7
+    //         });
+    //         return(encryptString.toString());
+    //     } else {
+    //         const encryptString = CryptoJS.AES.encrypt(JSON.stringify('0x', data), key, {
+    //             iv: iv,
+    //             mode: CryptoJS.mode.CBC,
+    //             padding: CryptoJS.pad.pkcs7
+    //         });
+    //         return(encryptString.toString());
+    //     }
+        
+    // }
+
+    const [wasteHash, setWasteHash] = useState();
+    const [retrieve, setRetrieve] = useState();
+    const [Account, setAccount] = useState();
+    const loadBlockchain = async () => { //contract delpoyed with ganach
+        // setLoading(true);
+        if(typeof window.ethereum == "undefined") {
+            return;
+        }
+        const web3 = new Web3(window.ethereum);
+    
+        const accounts = await web3.eth.getAccounts();
+        //setCurrentAccount(account);
+    
+        if (accounts.length === 0) {
+            return;
+        }
+        setAccount(accounts[0]);
+        const networkId = await web3.eth.net.getId();
+        const networkData = Storehash.networks[networkId];
+        const Address = networkData["address"];
+    
+        if (networkId === 5777) { // if we use current netorkId it deploy. if not like id == 42 it will not work
+        //   setLoading(false);
+            console.log(Address);
+            const StoreHashContract = new web3.eth.Contract(Storehash.abi, Address);
+            
+            const data = selectedFlatRows.map((row) => row.original);
+
+            // const hash = encryptData(data);
+            // console.log(hash);
+            const hash = web3.utils.soliditySha3({type: 'string', value: "data"}); 
+            const wasteHash = await StoreHashContract.methods.store(hash).call();
+            // const wasteHash = await StoreHashContract.methods.store(data).send({from: accounts[0] , value: data });
+
+            // setWasteHash(wasteHash);
+            const retrieve = await StoreHashContract.methods.retrieve().call();
+            // setRetrieve(retrieve);
+        } else {
+            swal({
+                title: "Network Error!",
+                text: "The contract is not detected by the network",
+                icon: "warning",
+                buttons: true,
+            });
+        }
+        console.log(wasteHash);
+        console.log(retrieve);
+        console.log(Account);
+    };
+    
+
+
     // Create an editable cell renderer
     const EditableCell = ({
         value: initialValue,
@@ -102,7 +182,7 @@ function Reviewform() {
             (err) => {
                 console.log(err);
                 setshowDanger(true);
-                setreviewStatus(err);
+                setreviewStatus(err.message);
             }
         )
     },[])
@@ -171,10 +251,29 @@ function Reviewform() {
         }
     );
 
+    // const algorithm = 'aes-192-cbc';
+    // const password = 'Password used to generate key';
+
+    // scrypt(password, 'salt', 24, (err, key) => {
+    // if (err) throw err;
+    
+    //     randomFill(new Uint8Array(16), (err, iv) => {
+    //         if (err) throw err;
+
+    //         const cipher = createCipheriv(algorithm, key, iv);
+
+    //         let encrypted = cipher.update('some clear text data', 'utf8', 'hex');
+    //         encrypted += cipher.final('hex');
+    //         console.log(encrypted);
+    //     });
+    // });
+
+    
+    
 
     const submitdata = e => {
         e.preventDefault();
-        const data =  selectedFlatRows.map((row) => row.original)
+        const data =  selectedFlatRows.map((row) => row.original);
         console.log(data);
         axios.post('http://localhost:3001/reviewsubmit', data).then(
             (response) => {
