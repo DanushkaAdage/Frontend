@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2021 at 02:45 PM
+-- Generation Time: Sep 13, 2021 at 07:09 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -43,8 +43,9 @@ CREATE TABLE `collectiondata` (
 --
 
 INSERT INTO `collectiondata` (`collectionid`, `collectionpoint`, `collectedby`, `wastetype`, `collectingequipment`, `quantity`, `dateandtime`, `tippingpoint`) VALUES
-(1, 'Kegalle', 'Robinson', 'Plastic', 'Truck, Bin', 27, '31/08/2021 12:02:05 PM', 'Insert Point'),
-(2, 'Mawnella', 'Atkin', 'Food', 'Bin', 52, '01/09/2021 01:32:45 PM', 'Insert Point');
+(2, 'Mawnella', 'Atkin', 'Food', 'Bin', 52, '01/09/2021 01:32:45 PM', ''),
+(8, 'Colombo', 'Klaus', 'Food', 'Truck', 65, '2021-09-06T20:01:12.547Z', ''),
+(9, 'Colombo', 'asd', 'Plastic', '1', 254, '2021-09-08T11:31:38.762Z', '');
 
 -- --------------------------------------------------------
 
@@ -70,7 +71,9 @@ INSERT INTO `collectionform` (`collectionid`, `collectionpoint`, `collectedby`, 
 (1, 'Kegalle', 'Robinson', 'Plastic', 'Truck, Bin', 27, '31/08/2021 12:02:05 PM'),
 (2, 'Mawnella', 'Atkin', 'Food', 'Bin', 52, '01/09/2021 01:32:45 PM'),
 (3, 'Kandy', 'Mikaelson', 'Paper', 'Truck', 31, '01/09/2021 09:15:15 AM'),
-(22, 'Colombo', 'Food', '23', 'Klaus', 0, '8/31/2021, 7:06:48 PM');
+(22, 'Colombo', 'Food', '23', 'Klaus', 0, '8/31/2021, 7:06:48 PM'),
+(25, 'Colombo', 'Klaus', 'Food', 'Truck', 65, '2021-09-06T20:01:12.547Z'),
+(26, 'Colombo', 'asd', 'Plastic', '1', 254, '2021-09-08T11:31:38.762Z');
 
 -- --------------------------------------------------------
 
@@ -79,7 +82,7 @@ INSERT INTO `collectionform` (`collectionid`, `collectionpoint`, `collectedby`, 
 --
 
 CREATE TABLE `reviewedform` (
-  `collectionid` int(100) NOT NULL,
+  `id` int(100) NOT NULL,
   `collectionpoint` text NOT NULL,
   `collectedby` text NOT NULL,
   `wastetype` text NOT NULL,
@@ -93,7 +96,8 @@ CREATE TABLE `reviewedform` (
 -- Dumping data for table `reviewedform`
 --
 
-INSERT INTO `reviewedform` (`collectionid`, `collectionpoint`, `collectedby`, `wastetype`, `collectingequipment`, `quantity`, `dateandtime`, `tippingpoint`) VALUES
+INSERT INTO `reviewedform` (`id`, `collectionpoint`, `collectedby`, `wastetype`, `collectingequipment`, `quantity`, `dateandtime`, `tippingpoint`) VALUES
+(1, 'Kegalle', 'Robinson', 'Plastic', 'Truck, Bin', 27, '31/08/2021 12:02:05 PM', '44'),
 (3, 'Kandy', 'Mikaelson', 'Paper', 'Truck', 31, '01/09/2021 09:15:15 AM', 'Colombo'),
 (4, '542', '5152', '512', '5612', 512, '512', '55'),
 (5, 'Colombo', 'Food', '23', 'Klaus', 0, '8/31/2021, 7:06:48 PM', '55');
@@ -140,7 +144,7 @@ ALTER TABLE `collectionform`
 -- Indexes for table `reviewedform`
 --
 ALTER TABLE `reviewedform`
-  ADD PRIMARY KEY (`collectionid`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -156,13 +160,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `collectiondata`
 --
 ALTER TABLE `collectiondata`
-  MODIFY `collectionid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `collectionid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `collectionform`
 --
 ALTER TABLE `collectionform`
-  MODIFY `collectionid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `collectionid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
