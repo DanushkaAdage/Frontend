@@ -6,7 +6,6 @@ import Logo from './../logo.png';
 import Container from 'react-bootstrap/Container';
 import { NavLink } from "react-router-dom";
 
-
 function Navibar() {
     return (
         <div>

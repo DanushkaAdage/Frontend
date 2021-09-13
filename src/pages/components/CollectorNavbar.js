@@ -8,6 +8,7 @@ import { NavLink, Redirect } from "react-router-dom";
 
 
 function CollectorNavbar() {
+    
     const [islogout, setislogout] = useState(false);
     const logout = () =>{
         localStorage.clear();
