@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Container from 'react-bootstrap/Container';
-import Alert from 'react-bootstrap/Alert';
-import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import './App.css';
@@ -92,22 +90,11 @@ function Analytics() {
             <NavCol />
             <Container fluid className="col-lg-12 col-md-12 col-sm-12 card-div">
                 <Card className="w-100">
-                
                     <DataGrid autoHeight 
                         rows={reviewData}
                         columns={columns}
                         pageSize={10}
                     />
-
-                    {/* <Row className="mt-3">
-                        {show && 
-                            <Alert variant="danger" className="alert-div">
-                                {reviewStatus}
-                            </Alert>
-                            
-                        }
-                    </Row> */}
-
                 </Card>
             </Container>
         </div>
