@@ -13,9 +13,9 @@ import { useTable, useRowSelect } from 'react-table';
 import { Checkbox } from './components/Checkbox';
 import NavCol from './components/NavCol';
 import swal from 'sweetalert';
-import CryptoJS from 'crypto-js';
+//import CryptoJS from 'crypto-js';
 // import {scrypt, randomFill, createCipheriv } from 'crypto';
-import Storehash from './../contracts/Storehash.json';
+import StoreHashAbi from './build/contracts/Storehash.json';
 import Web3 from 'web3';
 import { stringify } from 'uuid';
 
@@ -63,13 +63,13 @@ function Reviewform() {
         }
         setAccount(accounts[0]);
         const networkId = await web3.eth.net.getId();
-        const networkData = Storehash.networks[networkId];
+        const networkData = StoreHashAbi.networks[networkId];
         const Address = networkData["address"];
     
         if (networkId === 5777) { // if we use current netorkId it deploy. if not like id == 42 it will not work
         //   setLoading(false);
             console.log(Address);
-            const StoreHashContract = new web3.eth.Contract(Storehash.abi, Address);
+            const StoreHashContract = new web3.eth.Contract(StoreHashAbi.abi, networkData.Address);
             
             const data = selectedFlatRows.map((row) => row.original);
 
@@ -77,6 +77,7 @@ function Reviewform() {
             // console.log(hash);
             const hash = web3.utils.soliditySha3({type: 'string', value: "data"}); 
             const wasteHash = await StoreHashContract.methods.store(hash).call();
+            setWasteHash(wasteHash);
             // const wasteHash = await StoreHashContract.methods.store(data).send({from: accounts[0] , value: data });
 
             // setWasteHash(wasteHash);
