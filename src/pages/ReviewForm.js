@@ -15,7 +15,7 @@ import NavCol from './components/NavCol';
 import swal from 'sweetalert';
 import CryptoJS from 'crypto-js';
 // import {scrypt, randomFill, createCipheriv } from 'crypto';
-import Storehash from './../contracts/Storehash.json';
+import StorHhashAbi from './../contracts/Storehash.json';
 import Web3 from 'web3';
 import { stringify } from 'uuid';
 
@@ -23,33 +23,15 @@ import { stringify } from 'uuid';
 
 function Reviewform() {
 
-    // function encryptData(data){
-    //     const iv = CryptoJS.enc.Base64.parse("");
-    //     const key = CryptoJS.SHA256("message");
-    //     if(typeof data == "string") {
-    //         data = data.slice();
-    //         const encryptString = CryptoJS.AES.encrypt( data, key, {
-    //             iv: iv,
-    //             mode: CryptoJS.mode.CBC,
-    //             padding: CryptoJS.pad.pkcs7
-    //         });
-    //         return(encryptString.toString());
-    //     } else {
-    //         const encryptString = CryptoJS.AES.encrypt(JSON.stringify('0x', data), key, {
-    //             iv: iv,
-    //             mode: CryptoJS.mode.CBC,
-    //             padding: CryptoJS.pad.pkcs7
-    //         });
-    //         return(encryptString.toString());
-    //     }
-        
-    // }
-
+    
     const [wasteHash, setWasteHash] = useState();
     const [retrieve, setRetrieve] = useState();
     const [Account, setAccount] = useState();
+    const [loading, setLoading] = useState(true);
+    const [loading2, setLoading2] = useState(false);
+   
     const loadBlockchain = async () => { //contract delpoyed with ganach
-        // setLoading(true);
+         setLoading(true);
         if(typeof window.ethereum == "undefined") {
             return;
         }
@@ -63,20 +45,24 @@ function Reviewform() {
         }
         setAccount(accounts[0]);
         const networkId = await web3.eth.net.getId();
-        const networkData = Storehash.networks[networkId];
-        const Address = networkData["address"];
+        const networkData = StoreHashAbi.networks[networkId];
+        //const Address = networkData["address"];
     
         if (networkId === 5777) { // if we use current netorkId it deploy. if not like id == 42 it will not work
-        //   setLoading(false);
+           setLoading(false);
             console.log(Address);
-            const StoreHashContract = new web3.eth.Contract(Storehash.abi, Address);
+            const StoreHashContract = new web3.eth.Contract(StoreHashAbi.abi, Address);
             
             const data = selectedFlatRows.map((row) => row.original);
 
             // const hash = encryptData(data);
             // console.log(hash);
-            const hash = web3.utils.soliditySha3({type: 'string', value: "data"}); 
+            const hash = web3.utils.soliditySha3({type: 'string', value: "data"}); // untill this part contract deployed
             const wasteHash = await StoreHashContract.methods.store(hash).call();
+            setWasteHash(wasteHash);
+            
+            
+            
             // const wasteHash = await StoreHashContract.methods.store(data).send({from: accounts[0] , value: data });
 
             // setWasteHash(wasteHash);
@@ -308,6 +294,46 @@ function Reviewform() {
             }
         )
     }
+    
+    const onSubmit = async (submitData) => { //convert storedata to a hash and send to block
+        console.log(onSubmit);
+        const web3 = new Web3(window.ethereum);
+        const storehash = await web3.utils.soliditySha3([submitData]);
+        await store
+        .methods
+        .store()
+        .send({from: account, value: storethash })
+        .once("recepient", (recepient) => {
+            window.alert("success")
+        })
+        .on("error", () => {
+            window.alert("error")
+        });
+    }
+
+    
+    // function encryptData(data){
+    //     const iv = CryptoJS.enc.Base64.parse("");
+    //     const key = CryptoJS.SHA256("message");
+    //     if(typeof data == "string") {
+    //         data = data.slice();
+    //         const encryptString = CryptoJS.AES.encrypt( data, key, {
+    //             iv: iv,
+    //             mode: CryptoJS.mode.CBC,
+    //             padding: CryptoJS.pad.pkcs7
+    //         });
+    //         return(encryptString.toString());
+    //     } else {
+    //         const encryptString = CryptoJS.AES.encrypt(JSON.stringify('0x', data), key, {
+    //             iv: iv,
+    //             mode: CryptoJS.mode.CBC,
+    //             padding: CryptoJS.pad.pkcs7
+    //         });
+    //         return(encryptString.toString());
+    //     }
+        
+    // }
+
 
 
     const removedata = e => {
